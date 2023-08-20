@@ -22,7 +22,7 @@ import com.example.demo.service.UserService;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class UserController {
 
 	@Autowired
@@ -36,14 +36,7 @@ public class UserController {
 	UserService userService;
 
 //   to save data into database
-	@PostMapping("/register")
-	public ResponseEntity<PersonDTO> saveDeveloper(@RequestBody PersonDTO person) {
-
-		PersonDTO responsedto= developerService.saveDeveloper(person);
-
-		return new ResponseEntity<PersonDTO>(responsedto,HttpStatus.CREATED);
-
-	}
+	
 
 //to get all the countries from database
 	@GetMapping("/getcountries")

@@ -1,11 +1,12 @@
 package com.example.demo.entity;
 
-
-
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,34 +31,26 @@ public class Person {
 	private String profilesummary;
 	private String specialization;
 	private Double yearofexperience;
-	
-	
-	
-	
-	
-	
-	@ManyToOne(cascade = CascadeType.PERSIST)               
-    @JoinColumn(name="countryid", nullable=false)
-    private Country country;
+	private String username;
+	private String password;
 
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "countryid", nullable = false)
+	private Country country;
 
-	
 	@ManyToMany(cascade = { CascadeType.ALL })
-	@JoinTable(
-	    name = "person_project",
-	    joinColumns = {  @JoinColumn(name = "userid")},
-	    inverseJoinColumns = {  @JoinColumn(name = "pid")}) 
+	@JoinTable(name = "person_project", joinColumns = { @JoinColumn(name = "userid") }, inverseJoinColumns = {
+			@JoinColumn(name = "pid") })
 	private List<Project> projects;
-	
-	
-	
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "person_role", joinColumns = @JoinColumn(name = "userid"), inverseJoinColumns = @JoinColumn(name = "id"))
+	private Set<Role> roles = new HashSet<>();
+
 //   @OneToMany(mappedBy="person")
 //   private List<Rating> ratings;
-   
+
 //   @OneToMany(mappedBy="person")
 //   private List<Review> reviews;
-   
-	
+
 }
-	
-	

@@ -1,8 +1,8 @@
 package com.example.demo.model;
 
-import org.springframework.stereotype.Component;
+import java.util.Set;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.stereotype.Component;
 
 import lombok.Data;
 
@@ -17,9 +17,11 @@ public class PersonDTO {
 	private String profilesummary;
 	private String specialization;
 	private Double yearofexperience;
-	@JsonIgnore
+	//@JsonIgnore
 	private Integer countryid;
-	
+	private String username;
+	private String password;
+	private Set<String> role;
 	
 	
 	

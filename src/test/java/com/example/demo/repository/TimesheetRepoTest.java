@@ -1,14 +1,17 @@
 //package com.example.demo.repository;
 //
 //
+//import java.util.List;
+//
+//import org.junit.jupiter.api.Assertions;
+//import org.junit.jupiter.api.Test;
 //import org.junit.jupiter.api.extension.ExtendWith;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 //import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 //import org.springframework.test.context.junit.jupiter.SpringExtension;
-
 //
-//
+//import com.example.demo.projections.TimesheetProjectionDTO;
 //
 //
 //
@@ -23,16 +26,19 @@
 //	
 //	
 //
-////	@Test
-////	public void givenWorkRepoNotNullTests() {
-////		int userId=5;
-////		
-////		List<WorkProjectionDTO> workList=wrepo.getMonthlySalary(userId);
-////		
-////		Assertions.assertNotNull(workList);
-////		
-////		
-////	}
+//	@Test
+//	public void givenWorkRepoNotNullTests() {
+//		int userId=5;
+//		int pid=5;
+//		
+//		List<TimesheetProjectionDTO> workList=wrepo.getMonthlySalary(userId, pid);
+//		
+//		Assertions.assertEquals(5, workList);		
+//		
+//	}
+//	
+	
+//}
 //	
 ////	@Test
 ////	public void givenWorkRepoValueTests() {

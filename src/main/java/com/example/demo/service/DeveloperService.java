@@ -1,47 +1,68 @@
 package com.example.demo.service;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Country;
+import com.example.demo.entity.Erole;
 import com.example.demo.entity.Person;
+import com.example.demo.entity.Role;
 import com.example.demo.model.PersonDTO;
 import com.example.demo.repository.CountryRepo;
 import com.example.demo.repository.DeveloperRepo;
-
+import com.example.demo.repository.RoleRepo;
 
 @Service
 public class DeveloperService {
-	
-	
 
 	@Autowired
 	ModelMapper modelMapper;
-	
+
 	@Autowired
 	DeveloperRepo developerRepo;
 	@Autowired
 	CountryRepo countryRepo;
-	
 
-	
-	public PersonDTO saveDeveloper(PersonDTO p) {
-		
-		Person developer= modelMapper.map(p, Person.class);
+	@Autowired
+	RoleRepo roleRepo;
+
+	@Autowired
+	PasswordEncoder encoder;
+
+	public void saveDeveloper(PersonDTO p) {
+
+		Set<Role> roles = new HashSet<>();
+		Person developer = modelMapper.map(p, Person.class);
+		developer.setPassword(encoder.encode(developer.getPassword()));
 //    	Country country= modelMapper.map(p, Country.class);
-		Optional<Country> country=countryRepo.findById(p.getCountryid());
-    	if(country.isPresent()) {
-    		developer.setCountry(country.get());
-    	}
-		
-		developer=developerRepo.save(developer);
-		
-		PersonDTO responsedto=modelMapper.map(developer, PersonDTO.class);
-		return responsedto;
-		
+		if (p.getCountryid() != null) {
+			Optional<Country> country = countryRepo.findById(p.getCountryid());
+			if (country.isPresent()) {
+				developer.setCountry(country.get());
+			}
+		}
+
+		if (p.getRole() == null) {
+			Role userRole = roleRepo.findByName(Erole.roleuser)
+					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+			roles.add(userRole);
+		}
+
+		developer.setRoles(roles);
+
+		developerRepo.save(developer);
+
+	}
+
+	public boolean existsByUsername(String username) {
+		// TODO Auto-generated method stub
+		return developerRepo.existsByUsername(username);
 	}
 
 //	public void rateDeveloper(Integer userid, Integer rating) {
@@ -54,11 +75,11 @@ public class DeveloperService {
 //		 }
 //	
 //	}
-	
-	
+
+	// countryRepo.findById(p.getCountryid())
+
 //	Login login=modelMapper.map(p,Login.class);
 //	login.setUserid(developer.getUserid());
 //	loginRepo.save(login);
 //	
 }
-
