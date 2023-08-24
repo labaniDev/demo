@@ -38,6 +38,7 @@ public class ProjectService {
 			project.getPersons().add(user);
 
 			//Project create = modelMapper.map(admin, Project.class);
+			@SuppressWarnings("unused")
 			Project createdProject = projectRepo.save(project);
 		}
 	}

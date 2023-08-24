@@ -1,7 +1,6 @@
 package com.example.demo.security.config;
 
 import javax.crypto.SecretKey;
-import java.security.Key;
 import java.util.Date;
 
 import javax.servlet.http.Cookie;
@@ -15,7 +14,6 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.WebUtils;
 
-import com.example.demo.service.UserDetailsServiceImpl;
 import com.example.demo.service.UserDetailsImpl;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
