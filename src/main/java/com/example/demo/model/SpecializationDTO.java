@@ -6,6 +6,6 @@ import lombok.Data;
 public class SpecializationDTO {
 	
 	
-	private Integer skillId;
-	private String skillName;
+	private Integer skillid;
+	private String skillname;
 }

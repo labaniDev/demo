@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.demo.model.CountryDTO;
 import com.example.demo.model.PersonDTO;
 import com.example.demo.service.CountryService;
 import com.example.demo.service.DeveloperService;
@@ -39,11 +38,11 @@ public class UserController {
 	
 
 //to get all the countries from database
-	@GetMapping("/getcountries")
-	public List<CountryDTO> getAllCountries() {
-
-		return countryService.getAllCountry();
-	}
+//	@GetMapping("/getcountries")
+//	public List<CountryDTO> getAllCountries() {
+//
+//		return countryService.getAllCountry();
+//	}
 
 
 

@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,18 +16,22 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.MessageResponse;
+import com.example.demo.model.CountryDTO;
 import com.example.demo.model.LoginDTO;
 import com.example.demo.model.PersonDTO;
+import com.example.demo.model.SpecializationDTO;
 import com.example.demo.model.UserInfoResponse;
 
 import com.example.demo.repository.RoleRepo;
 import com.example.demo.security.config.JwtUtils;
+import com.example.demo.service.CountryService;
 import com.example.demo.service.DeveloperService;
 import com.example.demo.service.UserDetailsImpl;
 
@@ -40,6 +45,10 @@ public class AuthController {
 
 	@Autowired
 	DeveloperService developerService;
+	@Autowired
+	CountryService countryService;
+//	@Autowired
+//	SpecializationService specializationService;
 
 
 
@@ -86,6 +95,19 @@ public class AuthController {
 		                                   userDetails.getUsername(),
 		                                   roles));
 	}
+	
+	@GetMapping("/getcountries")
+	public List<CountryDTO> getAllCountries() {
+
+		return countryService.getAllCountry();
+	}
+	
+//	@PostMapping("/insert")
+//	public ResponseEntity<SpecializationDTO> saveSpecialization(@RequestBody SpecializationDTO specializationDTO){
+//		specializationService.insertSpecialization(specializationDTO);
+//		return new ResponseEntity<SpecializationDTO>(HttpStatus.CREATED);
+//		
+//	 }
 
 //	@PostMapping("/signup")
 //	public ResponseEntity<?> registerUser(@Valid @RequestBody LoginDTO loginDto) {

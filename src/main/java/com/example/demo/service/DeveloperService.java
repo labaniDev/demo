@@ -13,10 +13,12 @@ import com.example.demo.entity.Country;
 import com.example.demo.entity.Erole;
 import com.example.demo.entity.Person;
 import com.example.demo.entity.Role;
+import com.example.demo.entity.Specialization;
 import com.example.demo.model.PersonDTO;
 import com.example.demo.repository.CountryRepo;
 import com.example.demo.repository.DeveloperRepo;
 import com.example.demo.repository.RoleRepo;
+import com.example.demo.repository.SpecializationRepo;
 
 @Service
 public class DeveloperService {
@@ -34,6 +36,8 @@ public class DeveloperService {
 
 	@Autowired
 	PasswordEncoder encoder;
+	@Autowired
+	SpecializationRepo specializationRepo;
 
 	public void saveDeveloper(PersonDTO p) {
 
@@ -46,13 +50,18 @@ public class DeveloperService {
 			if (country.isPresent()) {
 				developer.setCountry(country.get());
 			}
-		}
+			}
+		
 
 		if (p.getRole() == null) {
 			Role userRole = roleRepo.findByName(Erole.roleuser)
 					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 			roles.add(userRole);
 		}
+//		if(p.getRole()==null) {
+//			Role adminRole = roleRepo.findByName(Erole.roleadmin);
+//			roles.add(adminRole);
+//		}
 
 		developer.setRoles(roles);
 
@@ -60,10 +69,31 @@ public class DeveloperService {
 
 	}
 
+
+		
+//public void insertSpecialization(PersonDTO p) {
+//	Person developer = modelMapper.map(p, Person.class);
+//		if(p.getSkillname()!=null) {
+//			Optional<Specialization> specialization=specializationRepo.findBySkillname(p.getSkillname());
+//			if(specialization.isPresent()) {
+//				developer.getSpecializations().add(specialization.get());
+//			}
+//		}
+//}
+		
+	
+	
+	
+	
+	
+
 	public boolean existsByUsername(String username) {
 		// TODO Auto-generated method stub
 		return developerRepo.existsByUsername(username);
 	}
+	
+	
+	
 
 //	public void rateDeveloper(Integer userid, Integer rating) {
 //		Optional<Person> userOptional=developerRepo.findById (userid);

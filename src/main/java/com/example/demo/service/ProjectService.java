@@ -1,8 +1,10 @@
 package com.example.demo.service;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -27,14 +29,17 @@ public class ProjectService {
 	DeveloperRepo developerRepo;
 	@Autowired
 	PersonDTO person;
-
-	public void createProject(ProjectDTO admin) {
-		Optional<Person> userOptional = developerRepo.findById(admin.getUserid());
+	
+	
+	
+	public void createProject(ProjectDTO projectDTO) {
+		
+		Optional<Person> userOptional = developerRepo.findById(projectDTO.getUserid());
 		if (userOptional.isPresent()) {
 			Person user = userOptional.get();
 			Project project = new Project();
-			project.setProjectname(admin.getProjectname());
-			project.setProjectdescription(admin.getProjectdescription());
+			project.setProjectname(projectDTO.getProjectname());
+			project.setProjectdescription(projectDTO.getProjectdescription());
 			project.getPersons().add(user);
 
 			//Project create = modelMapper.map(admin, Project.class);

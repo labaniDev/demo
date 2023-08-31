@@ -1,6 +1,5 @@
 package com.example.demo.security.config;
 
-import javax.crypto.SecretKey;
 import java.util.Date;
 
 import javax.servlet.http.Cookie;
@@ -50,7 +49,7 @@ public class JwtUtils {
 
 	public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
 		String jwt = generateTokenFromUsername(userPrincipal.getUsername());
-		ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(24 * 60 * 60).httpOnly(true)
+		ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(300).httpOnly(true)
 				.build();
 		return cookie;
 	}
@@ -65,8 +64,8 @@ public class JwtUtils {
 	}
 
 	private java.security.Key key() {
-		SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
-		String secretString = Encoders.BASE64.encode(key.getEncoded());
+		//SecretKey key = Keys.secretKeyFor(SignatureAlgorithm.HS512);
+		String secretString = Encoders.BASE64.encode(jwtSecret.getBytes());
 		logger.info("Secret key: " + secretString);
 		return Keys.hmacShaKeyFor(Decoders.BASE64.decode(secretString));
 	}

@@ -50,13 +50,14 @@ public class WebSecurityConfig  {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
     @Bean
 	protected SecurityFilterChain configure(HttpSecurity http) throws Exception {
 		 http.csrf(csrf -> csrf.disable())
 		 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
 	        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 	        .authorizeHttpRequests(auth -> 
-	          auth.antMatchers("/api/users/auth/**").permitAll()
+	          ( auth.antMatchers("/api/users/auth/**","/swagger-ui/**", "/v2/api-docs", "/swagger-resources/**", "/webjars/**")).permitAll()
 	              //.requestMatchers("/api/test/**").permitAll()
 	              .anyRequest().authenticated()
 	        );

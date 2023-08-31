@@ -15,12 +15,13 @@ public class PersonDTO {
 	private String dob;
 	private double hourlyrate;
 	private String profilesummary;
-	private String specialization;
+	//private String specialization;
 	private Double yearofexperience;
 	//@JsonIgnore
 	private Integer countryid;
 	private String username;
 	private String password;
+	private String skillname;
 	private Set<String> role;
 	
 	

@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
 import lombok.Data;
 
 @Entity
@@ -29,7 +32,6 @@ public class Person {
 	private String dob;
 	private Double hourlyrate;
 	private String profilesummary;
-	private String specialization;
 	private Double yearofexperience;
 	private String username;
 	private String password;
@@ -52,5 +54,10 @@ public class Person {
 
 //   @OneToMany(mappedBy="person")
 //   private List<Review> reviews;
+	
+	@OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy="person")
+	private Set<Specialization> specializations= new HashSet<>();
+
+			
 
 }
