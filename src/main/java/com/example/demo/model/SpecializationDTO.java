@@ -8,4 +8,5 @@ public class SpecializationDTO {
 	
 	private Integer skillid;
 	private String skillname;
+	private Integer userid;
 }

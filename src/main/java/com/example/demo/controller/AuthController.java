@@ -33,6 +33,7 @@ import com.example.demo.repository.RoleRepo;
 import com.example.demo.security.config.JwtUtils;
 import com.example.demo.service.CountryService;
 import com.example.demo.service.DeveloperService;
+import com.example.demo.service.SpecializationService;
 import com.example.demo.service.UserDetailsImpl;
 
 @RestController
@@ -47,6 +48,8 @@ public class AuthController {
 	DeveloperService developerService;
 	@Autowired
 	CountryService countryService;
+	@Autowired
+	SpecializationService specializationService;
 //	@Autowired
 //	SpecializationService specializationService;
 
@@ -102,12 +105,18 @@ public class AuthController {
 		return countryService.getAllCountry();
 	}
 	
-//	@PostMapping("/insert")
-//	public ResponseEntity<SpecializationDTO> saveSpecialization(@RequestBody SpecializationDTO specializationDTO){
-//		specializationService.insertSpecialization(specializationDTO);
-//		return new ResponseEntity<SpecializationDTO>(HttpStatus.CREATED);
-//		
-//	 }
+	
+	@GetMapping("/getskill")
+	public List<SpecializationDTO> getAllSkill(){
+		return specializationService.getAllSpecialization();
+	}
+	
+	@PostMapping("/insert")
+	public ResponseEntity<SpecializationDTO> saveSpecialization(@RequestBody SpecializationDTO specializationDTO){
+		specializationService.createSpecialization(specializationDTO);
+		return new ResponseEntity<SpecializationDTO>(HttpStatus.CREATED);
+		
+	 }
 
 //	@PostMapping("/signup")
 //	public ResponseEntity<?> registerUser(@Valid @RequestBody LoginDTO loginDto) {

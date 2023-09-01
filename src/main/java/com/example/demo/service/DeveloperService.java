@@ -71,15 +71,15 @@ public class DeveloperService {
 
 
 		
-//public void insertSpecialization(PersonDTO p) {
-//	Person developer = modelMapper.map(p, Person.class);
-//		if(p.getSkillname()!=null) {
-//			Optional<Specialization> specialization=specializationRepo.findBySkillname(p.getSkillname());
-//			if(specialization.isPresent()) {
-//				developer.getSpecializations().add(specialization.get());
-//			}
-//		}
-//}
+public void insertSpecialization(PersonDTO p) {
+	Person developer = modelMapper.map(p, Person.class);
+		if(p.getSkillid()!=null) {
+			Optional<Specialization> specialization=specializationRepo.findById(p.getSkillid());
+			if(specialization.isPresent()) {
+				developer.getSpecializations().add(specialization.get());
+			}
+		}
+}
 		
 	
 	
