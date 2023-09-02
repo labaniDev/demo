@@ -56,10 +56,8 @@ public class UserController {
 //	}
 
 // to get all users from database
-	@GetMapping("/showallusers")
-	public List<PersonDTO> getAllUsers() {
-		return userService.getAllPerson();
-	}
+	
+	
 
 //	to update data into the database
 	@PostMapping("/updateuser")

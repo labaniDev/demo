@@ -22,6 +22,8 @@ public class PersonDTO {
 	private String username;
 	private String password;
 	private Integer skillid;
+	
+	
 	private Set<String> role;
 	
 	

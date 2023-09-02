@@ -58,10 +58,5 @@ public class Person {
 	@JoinTable(name="person_specialization", joinColumns = @JoinColumn(name = "userid"), inverseJoinColumns = @JoinColumn(name = "skillid"))
 	private Set<Specialization> specializations = new HashSet<>();
 	
-	
-	 @OneToOne(cascade = CascadeType.ALL)
-	    @JoinColumn(name = "roleid")
-	    private Role role;
-			
 
 }

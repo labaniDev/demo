@@ -8,6 +8,5 @@ public class RoleDTO {
 	
 	private Integer roleid;
 	private Erole name;
-	private Integer userid;
-
+	
 }

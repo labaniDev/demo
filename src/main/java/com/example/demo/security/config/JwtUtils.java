@@ -37,22 +37,50 @@ public class JwtUtils {
 
 	@Value("${login.jwtCookieName}")
 	private String jwtCookie;
+	
+	@Value("${login.jwtRefreshCookieName}")
+	  private String jwtRefreshCookie;
+	
+	 public static final String TOKEN_PREFIX = "Bearer ";
+	  public static final String HEADER_STRING = "Authorization";
 
 	public String getJwtFromCookies(HttpServletRequest request) {
-		Cookie cookie = WebUtils.getCookie(request, jwtCookie);
-		if (cookie != null) {
-			return cookie.getValue();
-		} else {
-			return null;
-		}
+//		Cookie cookie = WebUtils.getCookie(request, jwtCookie);
+//		if (cookie != null) {
+//			logger.info("jwt: " + cookie.getValue());
+//			return cookie.getValue();
+//		} else {
+//			return null;
+//		}
+		
+		
+		String header = request.getHeader(HEADER_STRING);
+
+        if (header == null || !header.startsWith(TOKEN_PREFIX)) {
+            
+            return null;
+        }
+        
+        String token = request.getHeader(HEADER_STRING);
+        
+        if(token!=null) {
+        	token.replace(TOKEN_PREFIX, "");
+        	
+        	return token;
+        }
+        
+        return null;
+	}
+	//public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
+		
+		public String generateJwtCookie(UserDetailsImpl userPrincipal) {
+		String jwt = generateTokenFromUsername(userPrincipal.getUsername());
+		//ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(300).httpOnly(true).secure(false).sameSite("None")
+				//.build();
+		return jwt;
 	}
 
-	public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
-		String jwt = generateTokenFromUsername(userPrincipal.getUsername());
-		ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(300).httpOnly(true)
-				.build();
-		return cookie;
-	}
+	
 
 	public ResponseCookie getCleanJwtCookie() {
 		ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/api").build();
@@ -93,4 +121,11 @@ public class JwtUtils {
 
 				.signWith(key(), SignatureAlgorithm.HS256).compact();
 	}
+	
+	
+
+	
+	
+	
+	
 }

@@ -53,19 +53,30 @@ public class DeveloperService {
 			}
 		
 
-		if (p.getRole() == null) {
+		if (p.getRole() != null) {
 			Role userRole = roleRepo.findByName(Erole.roleuser)
 					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
 			roles.add(userRole);
 		}
+		
+		developer.setRoles(roles);
 //		if(p.getRole()==null) {
 //			Role adminRole = roleRepo.findByName(Erole.roleadmin);
 //			roles.add(adminRole);
 //		}
+		Set<Specialization> specializations=new HashSet<>();
+		if(p.getSkillid()!= null) {
+			Specialization userSkill = specializationRepo.findById(p.getSkillid())
+					.orElseThrow(() -> new RuntimeException("Error: Skill is not found."));
+			specializations.add(userSkill);
+		}
 
-		developer.setRoles(roles);
+		
+		developer.setSpecializations(specializations);
 
 		developerRepo.save(developer);
+		
+		
 
 	}
 

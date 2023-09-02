@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,9 +24,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.entity.MessageResponse;
+//import com.example.demo.entity.RefreshToken;
+import com.example.demo.entity.TokenRefreshException;
 import com.example.demo.model.CountryDTO;
 import com.example.demo.model.LoginDTO;
 import com.example.demo.model.PersonDTO;
+import com.example.demo.model.RoleDTO;
 import com.example.demo.model.SpecializationDTO;
 import com.example.demo.model.UserInfoResponse;
 
@@ -33,8 +37,11 @@ import com.example.demo.repository.RoleRepo;
 import com.example.demo.security.config.JwtUtils;
 import com.example.demo.service.CountryService;
 import com.example.demo.service.DeveloperService;
+//import com.example.demo.service.RefreshTokenService;
+import com.example.demo.service.RoleService;
 import com.example.demo.service.SpecializationService;
 import com.example.demo.service.UserDetailsImpl;
+import com.example.demo.service.UserService;
 
 @RestController
 @RequestMapping("/api/users/auth")
@@ -50,13 +57,15 @@ public class AuthController {
 	CountryService countryService;
 	@Autowired
 	SpecializationService specializationService;
+	@Autowired
+	UserService userService;
 //	@Autowired
-//	SpecializationService specializationService;
-
-
+//    RefreshTokenService refreshTokenService;
 
 	@Autowired
 	RoleRepo roleRepo;
+	@Autowired
+	RoleService roleService;
 
 	@Autowired
 	PasswordEncoder encoder;
@@ -83,40 +92,79 @@ public class AuthController {
 
 		Authentication authentication = authenticationManager
 		        .authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
+		
+		//System.out.println(request.getCookies());
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-		ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userDetails);
+		String jwt = jwtUtils.generateJwtCookie(userDetails);
 
 		List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
 				.collect(Collectors.toList());
 
-		return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-		        .body(new UserInfoResponse(userDetails.getUserid(),
+	//	return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+		return ResponseEntity.ok().body(new UserInfoResponse(userDetails.getUserid(),
 		                                   userDetails.getUsername(),
-		                                   roles));
+		                                   roles,jwt));
 	}
+//	 @PostMapping("/refreshtoken")
+//	  public ResponseEntity<?> refreshtoken(HttpServletRequest request) {
+//	    String refreshToken = jwtUtils.getJwtFromCookies(request);
+//	    
+//	    if ((refreshToken != null) && (refreshToken.length() > 0)) {
+//	      return refreshTokenService.findByToken(refreshToken)
+//	          .map(refreshTokenService::verifyExpiration)
+//	          .map(RefreshToken::getUser)
+//	          .map(user -> {
+//            ResponseCookie jwtCookie = jwtUtils.generateJwtCookie(userPrincipal);
+//	            
+//	            return ResponseEntity.ok()
+//	                .header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
+//	                .body(new MessageResponse("Token is refreshed successfully!"));
+//	          })
+//	          .orElseThrow(() -> new TokenRefreshException(refreshToken,
+//	              "Refresh token is not in database!"));
+//	    }
+//	    
+//	    return ResponseEntity.badRequest().body(new MessageResponse("Refresh Token is empty!"));
+//	  }
 	
+
+
 	@GetMapping("/getcountries")
 	public List<CountryDTO> getAllCountries() {
 
 		return countryService.getAllCountry();
 	}
 	
+	@GetMapping("/getallusers")
+	public List<PersonDTO> getAllUsers() {
+		return userService.getAllPerson();
+	}
 	
 	@GetMapping("/getskill")
 	public List<SpecializationDTO> getAllSkill(){
 		return specializationService.getAllSpecialization();
 	}
 	
-	@PostMapping("/insert")
+	@PostMapping("/insertskill")
 	public ResponseEntity<SpecializationDTO> saveSpecialization(@RequestBody SpecializationDTO specializationDTO){
 		specializationService.createSpecialization(specializationDTO);
 		return new ResponseEntity<SpecializationDTO>(HttpStatus.CREATED);
 		
 	 }
+	@PostMapping("/createrole")
+	public ResponseEntity<RoleDTO> createRole(@RequestBody RoleDTO roleDTO) {
+		roleService.saveRole(roleDTO);
+		return new ResponseEntity<RoleDTO>(HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/getrole")
+	public List<RoleDTO> getAllrole(){
+		return roleService.getAllRole();
+	}
 
 //	@PostMapping("/signup")
 //	public ResponseEntity<?> registerUser(@Valid @RequestBody LoginDTO loginDto) {

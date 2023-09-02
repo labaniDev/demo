@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Person;
-import com.example.demo.entity.Project;
 import com.example.demo.entity.Specialization;
-import com.example.demo.model.ProjectDTO;
 import com.example.demo.model.SpecializationDTO;
 import com.example.demo.repository.DeveloperRepo;
 import com.example.demo.repository.SpecializationRepo;
