@@ -29,6 +29,7 @@ import com.example.demo.entity.TokenRefreshException;
 import com.example.demo.model.CountryDTO;
 import com.example.demo.model.LoginDTO;
 import com.example.demo.model.PersonDTO;
+import com.example.demo.model.ProjectDTO;
 import com.example.demo.model.RoleDTO;
 import com.example.demo.model.SpecializationDTO;
 import com.example.demo.model.UserInfoResponse;
@@ -37,6 +38,7 @@ import com.example.demo.repository.RoleRepo;
 import com.example.demo.security.config.JwtUtils;
 import com.example.demo.service.CountryService;
 import com.example.demo.service.DeveloperService;
+import com.example.demo.service.ProjectService;
 //import com.example.demo.service.RefreshTokenService;
 import com.example.demo.service.RoleService;
 import com.example.demo.service.SpecializationService;
@@ -72,6 +74,19 @@ public class AuthController {
 
 	@Autowired
 	JwtUtils jwtUtils;
+	@Autowired
+	 ProjectService projectService;
+	
+	@PostMapping("/createProject")
+	public ResponseEntity<Object> createProject(@RequestBody ProjectDTO project) {
+
+		projectService.createProject(project);
+		return new ResponseEntity<Object>(HttpStatus.CREATED);
+	}
+	@GetMapping("/viewProject")
+	public List<ProjectDTO> viewAllProjects(){
+		return projectService.getAllProjects();
+	}
 	
 
 	@PostMapping("/signup")

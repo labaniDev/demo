@@ -25,21 +25,21 @@ public class ProjectController {
 	@Autowired
  ProjectService projectService;
 	
-	@PostMapping("/createProject")
-	public ResponseEntity<Object> createProject(@RequestBody ProjectDTO project) {
-
-		projectService.createProject(project);
-		return new ResponseEntity<Object>(HttpStatus.CREATED);
-	}
+//	@PostMapping("/createProject")
+//	public ResponseEntity<Object> createProject(@RequestBody ProjectDTO project) {
+//
+//		projectService.createProject(project);
+//		return new ResponseEntity<Object>(HttpStatus.CREATED);
+//	}
 	@PutMapping("/editProject")	
 	public ResponseEntity<String> updateProject(@RequestBody ProjectDTO project){
 		projectService.updateProject(project);
 		return new ResponseEntity<String>("Updated Successfully",HttpStatus.OK);
 	}
-	@GetMapping("/viewProject")
-	public List<ProjectDTO> viewAllProjects(){
-		return projectService.getAllProjects();
-	}
+//	@GetMapping("/viewProject")
+//	public List<ProjectDTO> viewAllProjects(){
+//		return projectService.getAllProjects();
+//	}
 	@DeleteMapping("/deleteProject/{pid}")
 	public String deleteProject(@PathVariable("pid") Integer pid) {
 		projectService.deleteProject(pid);

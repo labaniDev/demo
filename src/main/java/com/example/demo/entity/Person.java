@@ -39,10 +39,10 @@ public class Person {
 	@JoinColumn(name = "countryid", nullable = false)
 	private Country country;
 
-	@ManyToMany(cascade = { CascadeType.ALL })
+	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "person_project", joinColumns = { @JoinColumn(name = "userid") }, inverseJoinColumns = {
 			@JoinColumn(name = "pid") })
-	private List<Project> projects;
+	private Set<Project> projects =new HashSet<>();
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "person_role", joinColumns = @JoinColumn(name = "userid"), inverseJoinColumns = @JoinColumn(name = "id"))
