@@ -14,6 +14,7 @@ import com.example.demo.entity.Project;
 import com.example.demo.model.ProjectDTO;
 import com.example.demo.model.PersonDTO;
 import com.example.demo.repository.ProjectRepo;
+import com.example.demo.repository.AutoProjectMapper;
 import com.example.demo.repository.DeveloperRepo;
 
 @Service
@@ -26,7 +27,9 @@ public class ProjectService {
 	DeveloperRepo developerRepo;
 	@Autowired
 	PersonDTO person;
-	
+	/*
+	 * @Autowired AutoProjectMapper autoProjectMapper;
+	 */
 	
 	
 	public void createProject(ProjectDTO projectDTO) {
@@ -45,15 +48,21 @@ public class ProjectService {
 		}
 	}
 
-	public int updateProject(ProjectDTO admin) {
-		Optional<Project> user = projectRepo.findById(admin.getUserid());
-		if (user.isPresent()) {
-			Project updatedProject = modelMapper.map(admin, Project.class);
-			projectRepo.save(updatedProject);
-			return 1;
+	public String updateProject (Integer pid,ProjectDTO projectDTO) {
+		Optional<Project> project = projectRepo.findById(projectDTO.getPid());
+		if (project.isPresent()) {
+			Project newProject=project.get();
+			newProject.setProjectname(projectDTO.getProjectname());
+			newProject.setProjectdescription(projectDTO.getProjectdescription());
+			projectRepo.save(newProject);
+			return "success";
+		} else {
+			return "failure";
 		}
+		
+		
 
-		return 0;
+	
 
 	}
 

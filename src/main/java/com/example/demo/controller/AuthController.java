@@ -17,8 +17,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,6 +64,7 @@ public class AuthController {
 	SpecializationService specializationService;
 	@Autowired
 	UserService userService;
+	
 //	@Autowired
 //    RefreshTokenService refreshTokenService;
 
@@ -86,6 +90,18 @@ public class AuthController {
 	@GetMapping("/viewProject")
 	public List<ProjectDTO> viewAllProjects(){
 		return projectService.getAllProjects();
+	}
+	
+	@PutMapping("/editProject/{pid}")	
+	public ResponseEntity<String> updateProject(@PathVariable("pid")Integer pid,@RequestBody ProjectDTO project){
+		projectService.updateProject(pid, project);
+		return new ResponseEntity<String>("Updated Successfully",HttpStatus.OK);
+	}
+	
+	@DeleteMapping("/deleteProject/{pid}")
+	public String deleteProject(@PathVariable("pid") Integer pid) {
+		projectService.deleteProject(pid);
+		return "Project Successfully Deleted";
 	}
 	
 

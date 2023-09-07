@@ -31,20 +31,20 @@ public class ProjectController {
 //		projectService.createProject(project);
 //		return new ResponseEntity<Object>(HttpStatus.CREATED);
 //	}
-	@PutMapping("/editProject")	
-	public ResponseEntity<String> updateProject(@RequestBody ProjectDTO project){
-		projectService.updateProject(project);
-		return new ResponseEntity<String>("Updated Successfully",HttpStatus.OK);
-	}
+//	@PutMapping("/editProject")	
+//	public ResponseEntity<String> updateProject(@RequestBody ProjectDTO project){
+//		projectService.updateProject(project);
+//		return new ResponseEntity<String>("Updated Successfully",HttpStatus.OK);
+//	}
 //	@GetMapping("/viewProject")
 //	public List<ProjectDTO> viewAllProjects(){
 //		return projectService.getAllProjects();
 //	}
-	@DeleteMapping("/deleteProject/{pid}")
-	public String deleteProject(@PathVariable("pid") Integer pid) {
-		projectService.deleteProject(pid);
-		return "Project Successfully Deleted";
-	}
+//	@DeleteMapping("/deleteProject/{pid}")
+//	public String deleteProject(@PathVariable("pid") Integer pid) {
+//		projectService.deleteProject(pid);
+//		return "Project Successfully Deleted";
+//	}
 	@PostMapping("/archieveProject/{pid}")
 	public ResponseEntity<String> archieveProject(@PathVariable("pid") Integer pid) {
 		projectService.scheduleArchiveOldProjects(pid);
