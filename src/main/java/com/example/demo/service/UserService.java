@@ -6,6 +6,8 @@ import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Person;
@@ -13,13 +15,16 @@ import com.example.demo.model.PersonDTO;
 import com.example.demo.repository.DeveloperRepo;
 
 @Service
+@EnableCaching
 public class UserService {
 
 	@Autowired
 	DeveloperRepo developerRepo;
 	@Autowired
 	ModelMapper modelMapper;
-
+   
+	
+	@Cacheable("person")
 	public List<PersonDTO> getAllPerson() {
 
 		List<Person> userlist = developerRepo.findAll();

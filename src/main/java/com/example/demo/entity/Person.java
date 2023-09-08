@@ -1,7 +1,7 @@
 package com.example.demo.entity;
 
+import java.io.Serializable;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,14 +14,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-
 import lombok.Data;
 
 @Entity
 @Data
-public class Person {
+public class Person implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer userid;
@@ -43,6 +45,8 @@ public class Person {
 	@JoinTable(name = "person_project", joinColumns = { @JoinColumn(name = "userid") }, inverseJoinColumns = {
 			@JoinColumn(name = "pid") })
 	private Set<Project> projects =new HashSet<>();
+	
+	
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "person_role", joinColumns = @JoinColumn(name = "userid"), inverseJoinColumns = @JoinColumn(name = "id"))
