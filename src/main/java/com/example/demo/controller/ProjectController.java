@@ -45,16 +45,12 @@ public class ProjectController {
 //		projectService.deleteProject(pid);
 //		return "Project Successfully Deleted";
 //	}
-	@PostMapping("/archieveProject/{pid}")
-	public ResponseEntity<String> archieveProject(@PathVariable("pid") Integer pid) {
-		projectService.scheduleArchiveOldProjects(pid);
-		return  ResponseEntity.ok("Project Archieved Successfully");
-	}
-	@PostMapping("/unarchieveProject/{pid}")
-	public ResponseEntity<String> unarchieveProject(@PathVariable("pid") Integer pid) {
-		projectService.unarchieveProject(pid);
-		return ResponseEntity.ok("Project Unarchieve successfully");
-	}
+//	@PostMapping("/archieveProject/{pid}")
+//	public ResponseEntity<String> archieveProject(@PathVariable("pid") Integer pid) {
+//		projectService.archiveOldProjects(pid);
+//		return  ResponseEntity.ok("Project Archieved Successfully");
+//	}
+	
 	@GetMapping("/activeProject")
 	public ResponseEntity<List<ProjectDTO>> getAllLiveProject() {
 		List<ProjectDTO> liveprojectlist=projectService.getLiveProject();

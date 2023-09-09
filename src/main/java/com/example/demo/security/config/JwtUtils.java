@@ -64,9 +64,9 @@ public class JwtUtils {
         String token = request.getHeader(HEADER_STRING);
         
         if(token!=null) {
-        	token.replace(TOKEN_PREFIX, "");
+        	String accessToken=token.replace(TOKEN_PREFIX, "");
         	
-        	return token;
+        	return accessToken;
         }
         
         return null;

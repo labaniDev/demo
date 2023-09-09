@@ -49,7 +49,7 @@ import com.example.demo.service.UserDetailsImpl;
 import com.example.demo.service.UserService;
 
 @RestController
-@RequestMapping("/api/users/auth")
+@RequestMapping("/api/auth")
 @CrossOrigin(origins = "*")
 public class AuthController {
 
@@ -89,6 +89,8 @@ public class AuthController {
 	}
 	@GetMapping("/viewProject")
 	public List<ProjectDTO> viewAllProjects(){
+		
+		
 		return projectService.getAllProjects();
 	}
 	
@@ -170,10 +172,7 @@ public class AuthController {
 		return countryService.getAllCountry();
 	}
 	
-	@GetMapping("/getallusers")
-	public List<PersonDTO> getAllUsers() {
-		return userService.getAllPerson();
-	}
+	
 	
 	@GetMapping("/getskill")
 	public List<SpecializationDTO> getAllSkill(){
@@ -195,6 +194,11 @@ public class AuthController {
 	@GetMapping("/getrole")
 	public List<RoleDTO> getAllrole(){
 		return roleService.getAllRole();
+	}
+	@PostMapping("/archieveProject/{pid}")
+	public ResponseEntity<String> archieveProject(@PathVariable("pid") Integer pid) {
+		projectService.archiveOldProjects(pid);
+		return  ResponseEntity.ok("Project Archieved Successfully");
 	}
 
 //	@PostMapping("/signup")

@@ -1,6 +1,5 @@
 package com.example.demo.entity;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,12 +17,9 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Person implements Serializable{
+public class Person {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer userid;
@@ -46,7 +42,7 @@ public class Person implements Serializable{
 			@JoinColumn(name = "pid") })
 	private Set<Project> projects =new HashSet<>();
 	
-	
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "person_role", joinColumns = @JoinColumn(name = "userid"), inverseJoinColumns = @JoinColumn(name = "id"))

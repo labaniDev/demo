@@ -44,6 +44,11 @@ public class UserController {
 //		return countryService.getAllCountry();
 //	}
 
+	
+	@GetMapping("/getallusers")
+	public List<PersonDTO> getAllUsers() {
+		return userService.getAllPerson();
+	}
 
 
 //	@PostMapping("/login")

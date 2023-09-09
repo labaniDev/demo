@@ -12,6 +12,6 @@ import com.example.demo.entity.Project;
 public interface ProjectRepo  extends CrudRepository<Project,Integer>,JpaRepository<Project,Integer>{
 	Optional<Project> findById(Integer pid);
 	
-	List<Project> findByArchieve(boolean archieve);
+	//List<Project> findByArchieve(boolean archieve);
 
 }

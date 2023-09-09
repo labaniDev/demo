@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -16,14 +17,19 @@ import lombok.Data;
 @Data
 @Entity
 @Table(name="project")
-public class Project {
+public class Project implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer pid;
 	private String projectname;
 	private String projectdescription;
-	private boolean archieve;
+	private Boolean archive;
+	//private Estatus ;
 	
 	@ManyToMany(mappedBy = "projects")
 	private List<Person> persons = new ArrayList<Person>();
