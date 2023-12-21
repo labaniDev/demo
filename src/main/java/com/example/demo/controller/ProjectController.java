@@ -25,37 +25,46 @@ public class ProjectController {
 	@Autowired
  ProjectService projectService;
 	
-//	@PostMapping("/createProject")
-//	public ResponseEntity<Object> createProject(@RequestBody ProjectDTO project) {
-//
-//		projectService.createProject(project);
-//		return new ResponseEntity<Object>(HttpStatus.CREATED);
-//	}
-//	@PutMapping("/editProject")	
-//	public ResponseEntity<String> updateProject(@RequestBody ProjectDTO project){
-//		projectService.updateProject(project);
-//		return new ResponseEntity<String>("Updated Successfully",HttpStatus.OK);
-//	}
+	@PostMapping("/createProject")
+	public ResponseEntity<Object> createProject(@RequestBody ProjectDTO project) {
+
+		projectService.createProject(project);
+		return new ResponseEntity<Object>(HttpStatus.CREATED);
+	}
+	@PutMapping("/editProject/{pid}")	
+	public ResponseEntity<String> updateProject(@PathVariable("pid")Integer pid,@RequestBody ProjectDTO projectDTO){
+		projectService.updateProject(pid, projectDTO);
+		return new ResponseEntity<String>("Updated Successfully",HttpStatus.OK);
+	}
+	@PutMapping("/editStatus/{pid}")
+	public ResponseEntity<String> updateStatus(@PathVariable("pid") Integer pid, @RequestBody ProjectDTO projectDTO) {
+		projectService.updateStatus(pid, projectDTO);
+		return new ResponseEntity<String>("OK", HttpStatus.OK);
+	}
 //	@GetMapping("/viewProject")
 //	public List<ProjectDTO> viewAllProjects(){
 //		return projectService.getAllProjects();
 //	}
-//	@DeleteMapping("/deleteProject/{pid}")
-//	public String deleteProject(@PathVariable("pid") Integer pid) {
-//		projectService.deleteProject(pid);
-//		return "Project Successfully Deleted";
-//	}
+	@DeleteMapping("/deleteProject/{pid}")
+	public String deleteProject(@PathVariable("pid") Integer pid) {
+		projectService.deleteProject(pid);
+		return "Project Successfully Deleted";
+	}
 //	@PostMapping("/archieveProject/{pid}")
 //	public ResponseEntity<String> archieveProject(@PathVariable("pid") Integer pid) {
 //		projectService.archiveOldProjects(pid);
 //		return  ResponseEntity.ok("Project Archieved Successfully");
 //	}
-	
-	@GetMapping("/activeProject")
-	public ResponseEntity<List<ProjectDTO>> getAllLiveProject() {
-		List<ProjectDTO> liveprojectlist=projectService.getLiveProject();
-		return ResponseEntity.ok(liveprojectlist);
-	}
+//	@GetMapping("/allArchiveProjects")
+//	public List<ProjectDTO> getAllLiveProject() {
+//		return projectService.getArchiveProjects();
+//		
+//	}
+//	@GetMapping("/activeProject")
+//	public ResponseEntity<List<ProjectDTO>> getAllLiveProject() {
+//		List<ProjectDTO> liveprojectlist=projectService.getLiveProject();
+//		return ResponseEntity.ok(liveprojectlist);
+//	}
 	  
 	
 	

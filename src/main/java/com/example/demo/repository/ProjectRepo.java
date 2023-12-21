@@ -13,5 +13,8 @@ public interface ProjectRepo  extends CrudRepository<Project,Integer>,JpaReposit
 	Optional<Project> findById(Integer pid);
 	
 	//List<Project> findByArchieve(boolean archieve);
+	
+	//List<Project> findByArchiveFalse();
+	//List<Project> findByArchiveTrue();
 
 }

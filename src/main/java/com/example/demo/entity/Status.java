@@ -1,9 +1,9 @@
 package com.example.demo.entity;
 
-public enum Estatus {
+public enum Status {
 	New,
 	inprogress,
 	completed,
-	archieve;
+	archive,
 
 }

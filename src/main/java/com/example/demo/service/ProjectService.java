@@ -1,26 +1,19 @@
 package com.example.demo.service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.entity.CacheData;
-import com.example.demo.entity.Estatus;
 import com.example.demo.entity.Person;
 import com.example.demo.entity.Project;
 import com.example.demo.model.ProjectDTO;
 import com.example.demo.model.PersonDTO;
 import com.example.demo.repository.ProjectRepo;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.example.demo.repository.AutoProjectMapper;
 import com.example.demo.repository.CacheDataRepo;
 import com.example.demo.repository.DeveloperRepo;
 
@@ -52,6 +45,11 @@ public class ProjectService {
 			project.setProjectname(projectDTO.getProjectname());
 			project.setProjectdescription(projectDTO.getProjectdescription());
 			project.getPersons().add(user);
+			
+			
+//			if(project.getStatus()!=null) {
+//				project.setStatus(projectDTO.getStatus());
+//			}
 
 			//Project create = modelMapper.map(admin, Project.class);
 			@SuppressWarnings("unused")
@@ -65,19 +63,28 @@ public class ProjectService {
 			Project newProject=project.get();
 			newProject.setProjectname(projectDTO.getProjectname());
 			newProject.setProjectdescription(projectDTO.getProjectdescription());
+			newProject.setStatus(projectDTO.getStatus());
 			projectRepo.save(newProject);
 			return "success";
 		} else {
 			return "failure";
 		}
-		
-		
-
-	
 
 	}
+	
+	
+	  public String updateStatus(Integer pid,ProjectDTO projectDTO) {
+	  Optional<Project> projectOptional=projectRepo.findById(projectDTO.getPid());
+	  
+	  if(projectOptional.isPresent()) { 
+		  Project newProject=projectOptional.get();
+	  newProject.setStatus(projectDTO.getStatus());
+	  projectRepo.save(newProject);
+	  return "success";
+	  } return "failure"; }
+	 
 
-	public List<ProjectDTO> getAllProjects() {//throws InterruptedException, JsonProcessingException {
+	//public List<ProjectDTO> getAllProjects() {//throws InterruptedException, JsonProcessingException {
 //		Optional<CacheData> OptionalCacheData=cacheDataRepo.findById("allprojects");
 //		
 //		if(OptionalCacheData.isPresent()) {
@@ -91,13 +98,13 @@ public class ProjectService {
 		
 		
 		
-		List<Project> projectlist = projectRepo.findAll();
-		List<ProjectDTO> projectDTOlist = modelMapper.map(projectlist, new TypeToken<List<ProjectDTO>>() {
-		}.getType());
-		
-		
-		return projectDTOlist;
-	}
+//		List<Project> projectlist = projectRepo.findByArchiveFalse();
+//		List<ProjectDTO> projectDTOlist = modelMapper.map(projectlist, new TypeToken<List<ProjectDTO>>() {
+//		}.getType());
+//		
+//		
+//		return projectDTOlist;
+//	}
 
 	public int deleteProject(Integer pid) {
 		Optional<Project> user = projectRepo.findById(pid);
@@ -114,14 +121,14 @@ public class ProjectService {
 
 	
 
-	public List<ProjectDTO> getLiveProject() {
-		List<Project> projectlist = null;
-		List<ProjectDTO> projectDTOlist = modelMapper.map(projectlist, new TypeToken<List<ProjectDTO>>() {
-		}.getType());
-
-		return projectDTOlist;
-
-	}
+//	public List<ProjectDTO> getArchiveProjects() {
+//		List<Project> projectlist =projectRepo.findByArchiveTrue();
+//		List<ProjectDTO> projectDTOlist = modelMapper.map(projectlist, new TypeToken<List<ProjectDTO>>() {
+//		}.getType());
+//
+//		return projectDTOlist;
+//
+//	}
 
 //	@Scheduled(cron = "0 0 0 1 * *") // Runs at midnight on the first day of every month
 //	public void scheduleArchiveOldProjects(Integer pid) {
@@ -129,17 +136,17 @@ public class ProjectService {
 //	}
 
 	
-	public void archiveOldProjects(Integer pid) {
-		Optional<Project> projectlist = projectRepo.findById(pid);
-		if (projectlist.isPresent()) {
-			Project project = projectlist.get();
-			project.setArchive(true);
-			projectRepo.save(project);
-		}
+//	public void archiveOldProjects(Integer pid) {
+//		Optional<Project> projectlist = projectRepo.findById(pid);
+//		if (projectlist.isPresent()) {
+//			Project project = projectlist.get();
+//			project.setArchive(true);
+//			projectRepo.save(project);
+//		}
 		
 		
 		
 
 	}
 
-}
+

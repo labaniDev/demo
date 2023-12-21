@@ -45,10 +45,10 @@ public class UserController {
 //	}
 
 	
-	@GetMapping("/getallusers")
-	public List<PersonDTO> getAllUsers() {
-		return userService.getAllPerson();
-	}
+//	@GetMapping("/getallusers")
+//	public List<PersonDTO> getAllUsers() {
+//		return userService.getAllPerson();
+//	}
 
 
 //	@PostMapping("/login")

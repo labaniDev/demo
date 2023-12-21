@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,8 +30,9 @@ public class Project implements Serializable{
 	private Integer pid;
 	private String projectname;
 	private String projectdescription;
-	private Boolean archive;
-	//private Estatus ;
+	@Enumerated(EnumType.STRING)
+	private Status status = Status.valueOf(Status.class,"inprogress");;
+	
 	
 	@ManyToMany(mappedBy = "projects")
 	private List<Person> persons = new ArrayList<Person>();
